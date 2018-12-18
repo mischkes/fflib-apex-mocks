@@ -60,23 +60,24 @@ Lets assume we've written our own list interface MyList.IList that we want to ei
 	
 ### a more complicated case
 
-		MyList mockedList = (MyList) Mk.mock(MyList.class);
-
-        Mk.when(mockedList.add(Mk.anyString())).thenReturn('Hello!');
-        Mk.when(mockedList.get(Mk.integerMoreThan(-1))).thenReturn('You got it!');
-        Mk.Method addObjectMethod = Mk.when(mockedList.addObject(Mk.anyObject())).thenReturn(false);
-
+		MyList mockedList = (MyList) Mock.mock(MyList.class);
+        
+        Mock.when(mockedList.add(Mock.anyString())).thenReturn('Hello!');
+        Mock.when(mockedList.get(Mock.integerMoreThan(-1))).thenReturn('You got it!');
+        Mock.Method addObjectMethod = Mock.when(mockedList.addObject(Mock.anyObject())).thenReturn(false);
+        
         System.assertEquals('Hello!', mockedList.add('anAddedValue'));
         System.assertEquals('You got it!', mockedList.get(2));
-
-
+        
+        
         mockedList.addObject(getHttpResponse(200, 'what a nice bod'));
-
+        
         HttpResponse addedObject = (HttpResponse) addObjectMethod.getCall().getArgument(0);
         System.assertEquals('what a nice bod', addedObject.getBody());
         System.assertEquals(200, addedObject.getStatusCode());
 
-### doing this the old way (+5 LOC)
+### doing this the old way (+50%	 LOC)
+
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         MyList mockedList = (MyList) mocks.mock(MyList.class);
 
